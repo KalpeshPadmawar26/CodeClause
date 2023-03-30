@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact Form with Captcha</title>
+	
+
+	<style type="text/css">
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		input[type="text"], textarea {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			resize: none;
+			margin-bottom: 20px;
+			font-size: 16px;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		.error {
+			color: red;
+			font-size: 14px;
+			margin-bottom: 10px;
+		}
+
+		.captcha {
+			display: inline-block;
+			background-color: #f2f2f2;
+			border-radius: 4px;
+			padding: 5px;
+			margin-bottom: 20px;
+			font-size: 20px;
+		}
+	</style>
+	<script type="text/javascript">
+		function generateCaptcha() {
+			var captcha = document.getElementById('captcha');
+			var number1 = Math.floor(Math.random() * 10);
+			var number2 = Math.floor(Math.random() * 10);
+			captcha.innerHTML = number1 + " + " + number2 + " = ";
+			document.getElementById('captcha-sum').value = number1 + number2;
+		}
+	</script>
+</head>
+<body onload="generateCaptcha()">
+	<h1>Contact Us</h1>
+	<form method="post" action="contact-form.php">
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" placeholder="Enter your name" required>
+		<label for="email">Email</label>
+		<input type="text" id="email" name="email" placeholder="Enter your email" required>
+		<label for="message">Message</label>
+		<textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+		<label for="captcha">Captcha: <span class="captcha" id="captcha"></span></label>
+		<input type="hidden" name="captcha-sum" id="captcha-sum">
+		<input type="text" name="captcha-input" required>
+		<div class="error"><?php echo $captcha_error; ?></div>
+		<button type="submit" name="submit">Submit</button>
+	</form>
+</body>
+</html>
